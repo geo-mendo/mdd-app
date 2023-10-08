@@ -1,0 +1,17 @@
+<nav *ngIf="!hide"  class="h-20 mb-16 navbar w-full p-2 pr-8 flex justify-between items-center border-b-2 border-gray-400" >
+   
+   <div class="flex-1 px-2 mx-2 h-full">
+      <img src="/assets/logo_p6.png" alt="logo" class=" h-full" />
+   </div>
+
+   <div *ngIf="!hideNavMenu" class="lg:flex lg:justify-between lg:items-center flex-none hidden">
+      <app-nav-menu class="menu menu-horizontal mr-8" ></app-nav-menu>
+      <app-profile-button></app-profile-button>
+   </div>
+
+   <div *ngIf="!hideNavMenu" class="flex-none lg:hidden">
+      <label for="my-drawer-3" aria-label="open sidebar" class="drawer-button btn btn-square btn-ghost">
+         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-6 h-6 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+      </label>
+   </div> 
+</nav>
