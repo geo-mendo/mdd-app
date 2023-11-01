@@ -1,3 +1,19 @@
-<p>
-  new-post works!
-</p>
+<section class="px-4 flex justify-center items-start w-full gap-4" >
+  <button type="button" class="btn btn-ghost -mt-1" (click)="backToFeed()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+    </svg>
+  </button>
+  <div class="mx-auto w-1/2  text-center">
+    <h1 class="font-bold text-2xl mb-8">Créer un nouvel article</h1>
+    <form class="flex flex-col justify-center items-center gap-6 w-full" [formGroup]="form" >
+      <select class="select select-bordered w-full" formControlName="topicId">
+        <option disabled selected>Sélectionner un thème</option>
+        <option *ngFor="let topic of topics$ | async as list" [value]="topic.id" > {{topic.title}} </option>
+      </select>
+      <input formControlName="title" type="text" placeholder="Titre de l'article" class="input input-bordered w-full" />
+      <textarea formControlName="content" class="textarea textarea-bordered w-full mb-8" rows="10" placeholder="Contenu de l'article"></textarea>
+      <button type="submit" class="btn btn-primary btn-wide" >Créer</button>
+    </form>
+  </div>
+</section>

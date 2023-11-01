@@ -1,3 +1,5 @@
+import { environment } from "src/environments/environment.development";
+
 export enum PathEnum {
     HOME = '',
     AUTH = 'auth',
@@ -20,9 +22,22 @@ export enum RoutesEnum {
     SIGNUP = `${PathEnum.AUTH}/${PathEnum.SIGNUP}`,
     DASHBOARD = `${PathEnum.SIGNIN}`,
     POSTS_FEED = `${PathEnum.DASHBOARD}/${PathEnum.POSTS_FEED}`,
-    NEW_POST = `${RoutesEnum.POSTS_FEED}/${PathEnum.NEW_POST}`,
+    NEW_POST = `${PathEnum.DASHBOARD}/${PathEnum.NEW_POST}`,
+    POST_DETAILS = `${PathEnum.DASHBOARD}/${PathEnum.POST_DETAILS}`,
     TOPICS = `${PathEnum.DASHBOARD}/${PathEnum.TOPICS}`,
     PROFILE = `${PathEnum.DASHBOARD}/${PathEnum.PROFILE}`,
 }
 
+
+export enum ApiRoutes {
+    SIGNIN = `signin`,
+    SIGNUP = `signup`,
+    CURRENT_USER = `current-user`,
+    POSTS = `posts`,
+    TOPICS = `topics`,
+    USERS = `users`,
+    COMMENTS = `comments`,
+    SUBSCRIPTIONS = `subscriptions`,
+    PROFILE = `profile`,
+}
 

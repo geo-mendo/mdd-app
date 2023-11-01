@@ -12,4 +12,8 @@ export class LSDataSource {
         const item = localStorage.getItem(key)
         return item;
     }
+
+    public removeItem(key: string) {
+        localStorage.removeItem(key)
+    }
 }

@@ -6,11 +6,13 @@ import { NewPostComponent } from './components/new-post/new-post.component';
 import { TopicsComponent } from './components/topics/topics.component';
 import { ProfilComponent } from './components/profil/profil.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
-    DashboardRoutingModule
+    DashboardRoutingModule,
+    ReactiveFormsModule
   ],
   declarations: [
     FeedComponent,

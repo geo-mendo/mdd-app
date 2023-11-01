@@ -8,4 +8,5 @@ export interface IAuthRepository {
     signup: (signupRequest: ISignupRequest) => Observable<AuthSuccess>
     setToken: (authToken: string) => void
     getToken: () => string | null
+    removeToken: () => void
 }

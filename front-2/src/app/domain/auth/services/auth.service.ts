@@ -62,4 +62,9 @@ constructor(
     return of(false);
   }
 
+  public logOut() {
+    this.authRepository.removeToken();
+    this.router.navigate([RoutesEnum.HOME])
+  }
+
 }

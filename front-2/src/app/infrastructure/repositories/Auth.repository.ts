@@ -6,13 +6,13 @@ import { ISignupRequest } from '../dtos/auth/ISignupRequest.interface';
 import { IAuthRepository } from "src/app/domain/auth/ports/IAuthRepository";
 import { LSDataSource } from "../dataSources/LSDataSource";
 import { Injectable } from '@angular/core';
+import { ApiRoutes, RoutesEnum } from "../routes/routes";
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthRepository implements IAuthRepository {
 
-    private authPath = "auth"
 
     constructor(
         private datasource: HttpDataSource,
@@ -20,11 +20,11 @@ export class AuthRepository implements IAuthRepository {
         ){}
 
     public signin(loginRequest: ISigninRequest):Observable<AuthSuccess> {
-        return this.datasource.post(`${this.authPath}/login`, loginRequest)
+        return this.datasource.post(ApiRoutes.SIGNIN, loginRequest)
     }
 
     public signup (signupRequest: ISignupRequest): Observable<AuthSuccess> {
-        return this.datasource.post(`${this.authPath}/signup`,signupRequest)
+        return this.datasource.post(ApiRoutes.SIGNUP,signupRequest)
     }
 
     public setToken(authToken: string){
@@ -33,5 +33,9 @@ export class AuthRepository implements IAuthRepository {
 
     public getToken(): string | null{
         return this.storageSource.getItem("authToken")
+    }
+
+    public removeToken(): void {
+        this.storageSource.removeItem("authToken")
     }
 }

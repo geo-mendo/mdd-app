@@ -10,7 +10,7 @@ import { ProfilComponent } from "./components/profil/profil.component";
 const routes: Routes = [
     { title:"Mon fil d'article", path: PathEnum.POSTS_FEED, component: FeedComponent  },
     { title:"Ajouter un article", path: PathEnum.NEW_POST, component: NewPostComponent },
-    { title:"Détail d'un article", path: PathEnum.POST_DETAILS, component: PostDetailsComponent },
+    { title:"Détail d'un article", path: `${PathEnum.POST_DETAILS}/:id`, component: PostDetailsComponent },
     { title:"Les thèmes", path: PathEnum.TOPICS, component: TopicsComponent  },
     { title:"Mes abonnements et informations", path: PathEnum.PROFILE, component: ProfilComponent },
 ];
