@@ -1,0 +1,15 @@
+<section class="p-8 gap-4 grid 2xl:grid-cols-3 md:grid-cols-2 ">
+  <div *ngFor="let topic of topics$ | async as list" class="p-4 w-full rounded-md bg-gray-100" >
+    <h3 class="mb-4 text-xl font-bold">{{topic.title}}</h3>
+    <div class="mb-4" >
+      <h5 class="font-bold" >Description:</h5>
+      <p class="pl-4">
+        {{topic.description}}
+      </p>
+    </div>
+    <div *ngIf="user$ | async as user" class="w-full text-center">
+      <button *ngIf="!isAlreadySubscribed(topic.id,user.subscriptions)" (click)="subscribeToTopic(topic.id)" type="button" class="btn btn-primary btn-wide" >S'abonner</button>
+      <button *ngIf="isAlreadySubscribed(topic.id,user.subscriptions)" type="button" disabled class="btn btn-primary btn-wide" >Déjà abonné</button>
+    </div>
+  </div>
+</section>
