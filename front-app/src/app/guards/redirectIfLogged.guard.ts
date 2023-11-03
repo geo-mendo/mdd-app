@@ -17,7 +17,7 @@ export const RedirectIfLoggedGuard: CanActivateFn = (route, state) => {
   return authService.isLogged().pipe(
     map(isLoggedIn => {
       if (isAuthRoutes && isLoggedIn) {
-        router.navigate([RoutesEnum.DASHBOARD]);
+        router.navigate([RoutesEnum.POSTS_FEED]);
         return false;
       }
       return true;

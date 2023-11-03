@@ -25,7 +25,7 @@ constructor(
     this.authRepository.signin(request).subscribe(
             (response: AuthSuccess) => {
                 this.authRepository.setToken(response.token);
-                this.router.navigate([RoutesEnum.DASHBOARD])
+                this.router.navigate([RoutesEnum.POSTS_FEED])
             },
             error => {
                 throw new Error("User not found")
@@ -37,7 +37,7 @@ constructor(
     this.authRepository.signup(request).subscribe(
             (response: AuthSuccess) => {
                 this.authRepository.setToken(response.token);
-                this.router.navigate([RoutesEnum.DASHBOARD])
+                this.router.navigate([RoutesEnum.POSTS_FEED])
             },
             error => {
                 throw new Error("User not found")

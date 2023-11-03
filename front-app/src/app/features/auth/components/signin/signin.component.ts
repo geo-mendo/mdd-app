@@ -22,14 +22,17 @@ export class SigninComponent implements OnInit {
   }
 
   public form = this.formBuilder.group({
-    email: ['', [Validators.required, Validators.email]],
+    emailOrUsername: ['', [Validators.required]],
     password: ['', [Validators.required, Validators.min(3)]]
   });
 
 
   public handleSubmit(){
     try {
-      const loginRequest = this.form.value as ISigninRequest;
+      const loginRequest = {
+        emailOrUsername: this.form.value.emailOrUsername,
+        password: this.form.value.password
+      } as ISigninRequest;
       this.authService.signin(loginRequest)
     } catch (error) {
       this.error = true

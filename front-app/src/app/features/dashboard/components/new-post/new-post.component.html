@@ -6,10 +6,10 @@
   </button>
   <div class="mx-auto w-1/2  text-center">
     <h1 class="font-bold text-2xl mb-8">Créer un nouvel article</h1>
-    <form class="flex flex-col justify-center items-center gap-6 w-full" [formGroup]="form" >
+    <form class="flex flex-col justify-center items-center gap-6 w-full" [formGroup]="form" (submit)="createPost()">
       <select class="select select-bordered w-full" formControlName="topicId">
         <option disabled selected>Sélectionner un thème</option>
-        <option *ngFor="let topic of topics$ | async as list" [value]="topic.id" > {{topic.title}} </option>
+        <option *ngFor="let topic of topics$ | async" [value]="topic.id" > {{topic.title}} </option>
       </select>
       <input formControlName="title" type="text" placeholder="Titre de l'article" class="input input-bordered w-full" />
       <textarea formControlName="content" class="textarea textarea-bordered w-full mb-8" rows="10" placeholder="Contenu de l'article"></textarea>

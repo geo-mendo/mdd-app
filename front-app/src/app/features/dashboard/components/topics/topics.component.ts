@@ -12,7 +12,7 @@ export class TopicsComponent implements OnInit {
 
   public topics$ = this.topicsService.getAllTopics();
   public user$ = this.userService.getCurrentUser();
-
+  public isJustSubscribedTopicId!: number;
   constructor(
     private readonly topicsService: TopicsService,
     private readonly userService: UserService,
@@ -22,15 +22,20 @@ export class TopicsComponent implements OnInit {
   ngOnInit() {
   }
 
-  public subscribeToTopic(topicId: number | undefined){
-    this.userService.addSubscriptionToTopic(topicId as number).subscribe({
+  public subscribeToTopic(userID:number | undefined ,topicId: number | undefined){
+    this.userService.addSubscriptionToTopic(userID as number,topicId as number).subscribe({
       next: success => {
         this.notifService.notify('success', 'Topic subscribed');
+        this.isJustSubscribedTopicId = topicId as number;
       },
       error: error => {
         this.notifService.notify('error', 'Error subscribing to topic');
       }
     })
+  }
+
+  public canSubscribe(topicId: number | undefined, userSubscription: TopicEntity[]): boolean {
+    return !this.isAlreadySubscribed(topicId, userSubscription) && !(this.isJustSubscribedTopicId === topicId);
   }
 
   public isAlreadySubscribed(topicId: number | undefined, userSubscription: TopicEntity[]): boolean {

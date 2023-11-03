@@ -7,7 +7,6 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppNavbarComponent } from './components/app-navbar/app-navbar.component';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { AppLayoutComponent } from './components/app-layout/app-layout.component';
-import { AppDrawerComponent } from './components/app-drawer/app-drawer.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { ProfileButtonComponent } from './components/profile-button/profile-button.component';
 import { NotifierModule } from 'angular-notifier';
@@ -16,7 +15,6 @@ import { NotifierModule } from 'angular-notifier';
   declarations: [
     AppComponent,
     AppLayoutComponent,
-    AppDrawerComponent,
     AppNavbarComponent,
     NavMenuComponent,
     ProfileButtonComponent

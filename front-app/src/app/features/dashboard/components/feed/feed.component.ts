@@ -19,7 +19,8 @@ export class FeedComponent implements OnInit {
     private router: Router
     ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
 
   public goToCreatePostFormPage(){

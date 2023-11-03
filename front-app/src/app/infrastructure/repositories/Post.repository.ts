@@ -22,11 +22,8 @@ export class PostRepository implements IPostRepository {
     }
 
     getPostById(postId: number): Observable<PostEntity> {
-        const param: IHttpParam = {
-            name: 'postId',
-            value: postId
-        }
-        return this.dataSource.getWithParams(ApiRoutes.POSTS, [param])
+       
+        return this.dataSource.get(`${ApiRoutes.POSTS}/${postId}`)
     }
 
     createNewPost(post: ICreatePost): Observable<PostEntity> {

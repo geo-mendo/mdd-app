@@ -6,5 +6,12 @@
     <!-- Page content here -->
     <ng-content></ng-content>
   </div>
-  <app-drawer></app-drawer>
+  <div class="drawer-side">
+    <label for="my-drawer-3" aria-label="close sidebar" class="drawer-overlay"> </label> 
+    <ul class="menu p-4 w-80 min-h-full bg-base-200 flex flex-col justify-between">
+      <!-- Sidebar content here -->
+      <app-nav-menu></app-nav-menu>
+      <app-profile-button></app-profile-button>
+    </ul>
+  </div>
 </div>

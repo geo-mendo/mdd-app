@@ -20,7 +20,7 @@ const routes: Routes = [
   },
   {
     path: PathEnum.DASHBOARD,
-    canActivate: [], 
+    canActivate: [AuthGuard], 
     loadChildren: () => import('./features/dashboard/dashboard.module').then(m => m.DashboardModule),
   },
   {

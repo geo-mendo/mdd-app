@@ -21,19 +21,16 @@ export class UserRepository implements IUserRepository{
         return this.datasource.get(ApiRoutes.CURRENT_USER)
     }
 
-    addSubscriptionToTopic(topicId: number): Observable<UserEntity> {
-        return this.datasource.post(ApiRoutes.SUBSCRIPTIONS, {topicId})
+    addSubscriptionToTopic(userId: number, topicId: number): Observable<UserEntity> {
+        return this.datasource.post(ApiRoutes.ADD_SUBSCRIPTION, {userId,topicId})
     }
 
     removeSubscriptionToTopic(topicId: number): Observable<Object> {
-        const param: IHttpParam = {
-            name: 'topicId',
-            value: topicId
-        }
-        return this.datasource.delete(ApiRoutes.SUBSCRIPTIONS, [param])
+     
+        return this.datasource.delete(`${ApiRoutes.REMOVE_SUBSCRIPTION}/${topicId}`)
     }
 
-    updateProfil(profil: IUpdateProfile): Observable<UserEntity> {
-        return this.datasource.put(ApiRoutes.PROFILE, profil)
+    updateProfil(profil: IUpdateProfile, userId: number): Observable<UserEntity> {
+        return this.datasource.put(`${ApiRoutes.PROFILE}/${userId}`, profil)
     }
 }

@@ -30,9 +30,9 @@ export class NewPostComponent implements OnInit {
   }
 
   public form = this.formBuilder.group({
-    topicId: ['',Validators.required],
-    title: ['',Validators.required, Validators.minLength(3)],
-    content: ['',Validators.required, Validators.minLength(50)],
+    topicId: ['',[Validators.required]],
+    title: ['',[Validators.required, Validators.minLength(3)]],
+    content: ['',[Validators.required, Validators.minLength(50)]],
   });
 
   public createPost() {

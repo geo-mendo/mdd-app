@@ -20,6 +20,6 @@ export class CommentRepository implements ICommentRepository {
         return this.dataSource.getWithParams(ApiRoutes.COMMENTS, [param]);
     }
     createNewComment(comment: ICreateComment): Observable<CommentEntity> {
-        return this.dataSource.post(ApiRoutes.POSTS, comment);
+        return this.dataSource.post(ApiRoutes.COMMENTS, comment);
     }
 }

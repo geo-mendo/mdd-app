@@ -17,16 +17,16 @@ export class UserService {
     return this.userRepository.getCurrentuser()
   }
 
-  addSubscriptionToTopic(topicId: number): Observable<UserEntity> {
-    return this.userRepository.addSubscriptionToTopic(topicId)
+  addSubscriptionToTopic(userId:number,topicId: number): Observable<UserEntity> {
+    return this.userRepository.addSubscriptionToTopic(userId,topicId)
   }
 
   removeSubscriptionToTopic(topicId: number): Observable<Object> {
     return this.userRepository.removeSubscriptionToTopic(topicId)
   }
 
-  updateProfil(profil: IUpdateProfile): Observable<UserEntity> {
-    return this.userRepository.updateProfil(profil)
+  updateProfil(profil: IUpdateProfile, userId: number): Observable<UserEntity> {
+    return this.userRepository.updateProfil(profil, userId)
   }
 
 }

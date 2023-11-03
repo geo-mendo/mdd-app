@@ -20,7 +20,7 @@ export enum RoutesEnum {
     NOT_FOUND = `${PathEnum.NOT_FOUND}`,
     SIGNIN = `${PathEnum.AUTH}/${PathEnum.SIGNIN}`,
     SIGNUP = `${PathEnum.AUTH}/${PathEnum.SIGNUP}`,
-    DASHBOARD = `${PathEnum.SIGNIN}`,
+    DASHBOARD = `${PathEnum.DASHBOARD}`,
     POSTS_FEED = `${PathEnum.DASHBOARD}/${PathEnum.POSTS_FEED}`,
     NEW_POST = `${PathEnum.DASHBOARD}/${PathEnum.NEW_POST}`,
     POST_DETAILS = `${PathEnum.DASHBOARD}/${PathEnum.POST_DETAILS}`,
@@ -30,14 +30,16 @@ export enum RoutesEnum {
 
 
 export enum ApiRoutes {
-    SIGNIN = `signin`,
-    SIGNUP = `signup`,
-    CURRENT_USER = `current-user`,
+    SIGNIN = `auth/signin`,
+    SIGNUP = `auth/register`,
+    CURRENT_USER = `auth/current-user`,
     POSTS = `posts`,
     TOPICS = `topics`,
     USERS = `users`,
     COMMENTS = `comments`,
     SUBSCRIPTIONS = `subscriptions`,
-    PROFILE = `profile`,
+    ADD_SUBSCRIPTION = 'add-subscription',
+    REMOVE_SUBSCRIPTION = 'remove-subscription',
+    PROFILE = `update-profile`,
 }
 

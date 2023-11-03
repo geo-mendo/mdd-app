@@ -1,10 +1,10 @@
 <app-auth-layout>
   <form class="w-4/12 flex flex-col justify-center items-center p-4" [formGroup]="form" (ngSubmit)="handleSubmit()">
     <div class="form-control w-full mb-4">
-      <label class="label" for="email">
+      <label class="label" for="emailOrUsername">
         <span class="label-text">E-mail ou nom d'utilisateur</span>
       </label>
-       <input formControlName="email" type="email" class="input input-bordered w-full " />
+       <input formControlName="emailOrUsername" type="text" class="input input-bordered w-full " />
     </div>
     <div class="form-control w-full mb-8">
       <label class="label" for="password">

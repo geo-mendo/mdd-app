@@ -29,17 +29,19 @@ export class ProfilComponent implements OnInit {
     .pipe(take(1))
     .subscribe(user => {
       this.user = user;
+      console.log(this.user);
       this.form.patchValue({
         username: user.username,
         email: user.email,
       });
     });
+      console.log(this.user);
   }
 
   public form = this.formBuilder.group({
-    username: ['',Validators.required, Validators.minLength(3)],
-    email: ['',Validators.required, Validators.email],
-    password: ['',Validators.required, passwordValidator()],
+    username: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required, passwordValidator]),
   });
 
   public updateProfil() {
@@ -48,7 +50,7 @@ export class ProfilComponent implements OnInit {
       email: this.form.value.email as string,
       password: this.form.value.password as string,
     }
-    this.userService.updateProfil(profil).subscribe({
+    this.userService.updateProfil(profil, this.user.id as number).subscribe({
       next: success => {
         this.notifService.notify('success', 'Profil updated successfully');
       },

@@ -39,7 +39,10 @@ export class PostDetailsComponent implements OnInit {
     }
     this.postService.getPostById(postId)
     .pipe(take(1))
-    .subscribe(post => this.post = post);
+    .subscribe(post => {
+      this.post = post;
+      console.log(post);
+    });
   }
 
   public backToFeed() {
