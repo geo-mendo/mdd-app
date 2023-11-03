@@ -2,9 +2,11 @@ package com.openclassrooms.mddapi.controllers;
 
 import com.openclassrooms.mddapi.dto.CommentRequestDTO;
 import com.openclassrooms.mddapi.dto.CommentResponseDTO;
+import com.openclassrooms.mddapi.dto.UserResponseDTO;
 import com.openclassrooms.mddapi.models.CommentEntity;
 import com.openclassrooms.mddapi.models.PostEntity;
 import com.openclassrooms.mddapi.models.UserEntity;
+import com.openclassrooms.mddapi.services.AuthService;
 import com.openclassrooms.mddapi.services.CommentService;
 import com.openclassrooms.mddapi.services.PostService;
 import com.openclassrooms.mddapi.services.UserService;
@@ -15,6 +17,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +35,10 @@ public class CommentController {
 
     private final PostService postService;
 
+    private final AuthService authService;
+
     private final UserService userService;
+
 
     @Operation(summary = "Ajouter un nouveau commentaire",security = @SecurityRequirement(name = "bearerAuth"))
     @ApiResponses(value = {
@@ -43,8 +50,9 @@ public class CommentController {
     @PostMapping()
     public ResponseEntity<CommentResponseDTO> addNewMessage(
             @Parameter(description="Requête contenant les informations du commentaire à créer", required=true)
-            @RequestBody CommentRequestDTO newCommentDTO) throws IOException {
-        UserEntity user =  userService.getUserById(newCommentDTO.getUserId());
+            @RequestBody CommentRequestDTO newCommentDTO,
+            HttpServletRequest request) throws IOException, ServletException {
+        UserEntity user =  authService.getUserFromToken(request);
         PostEntity post = postService.getPostById(newCommentDTO.getPostId());
         CommentEntity newMessage = new CommentEntity();
         newMessage.setContent(newCommentDTO.getContent());

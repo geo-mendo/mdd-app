@@ -8,17 +8,14 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserResponseDTO {
-     Long id;
+public class UpdateUserRequestDTO {
+
      String username;
      String email;
-     List<TopicEntity> subscriptions;
-     LocalDate createdAt;
-     LocalDate updatedAt;
+     String password;
 }

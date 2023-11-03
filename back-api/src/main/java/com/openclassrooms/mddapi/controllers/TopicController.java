@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/topics")
@@ -32,11 +33,10 @@ public class TopicController {
     @Operation(summary = "Récupérer tous les thèmes",security = @SecurityRequirement(name = "bearerAuth"))
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Retourne la liste de tout les thèmes",
-                    content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = TopicsResponseDTO.class)) }),
+                    content = { @Content(mediaType = "application/json" ) }),
             @ApiResponse(responseCode = "500", description = "Erreur interne du serveur") })
     @GetMapping
-    public ResponseEntity<TopicsResponseDTO> getAllTopics() {
+    public ResponseEntity<List<TopicResponseDTO>> getAllTopics() {
         return ResponseEntity.ok(topicService.getAllTopics());
     }
 

@@ -9,12 +9,15 @@ import com.openclassrooms.mddapi.models.UserEntity;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 
@@ -47,11 +50,20 @@ public class AuthService {
     public AuthResponseDTO authenticate(AuthRequestDTO request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
+                        request.getEmailOrUsername(),
                         request.getPassword()
                 )
         );
-        var user = userService.getUserByEmail(request.getEmail());
+        UserEntity user = userService.getUserByEmail(request.getEmailOrUsername());
+        System.out.println(user);
+        if (user == null) {
+            user = userService.getUserByUsername(request.getEmailOrUsername());
+        }
+
+        if (user == null) {
+            throw new UsernameNotFoundException("Utilisateur non trouvé avec l'email ou le nom d'utilisateur : " + request.getEmailOrUsername());
+        }
+
         var jwtToken = jwtService.generateToken(user);
         return AuthResponseDTO.builder()
                 .bearerToken(jwtToken)
@@ -59,6 +71,11 @@ public class AuthService {
     }
 
     public UserResponseDTO getCurrentUser(@NonNull HttpServletRequest request) throws ServletException {
+        UserEntity user = getUserFromToken(request);
+        return userService.mapUserEntityToDTO(user);
+    }
+
+    public UserEntity getUserFromToken(@NonNull HttpServletRequest request)throws ServletException{
         final String authHeader = request.getHeader("Authorization");
         final String jwt;
         final String userEmail;
@@ -69,8 +86,11 @@ public class AuthService {
         userEmail = jwtService.extractUserEmail(jwt);
         if (userEmail != null) {
             UserEntity user = userService.getUserByEmail(userEmail);
-            if (jwtService.isTokenValid(jwt, userEmail)) {
-                return userService.mapUserEntityToDTO(user);
+            if (user != null) {
+
+                if (jwtService.isTokenValid(jwt, userEmail)) {
+                    return user;
+                }
             }
         }
         throw new ServletException();

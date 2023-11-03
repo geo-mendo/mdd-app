@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AuthRequestDTO {
 
-    @JsonProperty("email")
-    String email;
+    @JsonProperty("emailOrUsername")
+    String emailOrUsername;
     @JsonProperty("password")
     String password;
 

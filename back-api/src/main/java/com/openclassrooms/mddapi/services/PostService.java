@@ -2,7 +2,6 @@ package com.openclassrooms.mddapi.services;
 
 import com.openclassrooms.mddapi.dto.PostRequestDTO;
 import com.openclassrooms.mddapi.dto.PostResponseDTO;
-import com.openclassrooms.mddapi.dto.PostsResponseDTO;
 import com.openclassrooms.mddapi.exceptions.PostNotFoundException;
 import com.openclassrooms.mddapi.models.PostEntity;
 import com.openclassrooms.mddapi.models.TopicEntity;
@@ -15,6 +14,7 @@ import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,6 +28,9 @@ public class PostService {
     @Autowired
     private TopicRepository topicRepository;
 
+    @Autowired
+    private UserService userService;
+
     public PostService(PostRepository postRepository) {
         this.postRepository = postRepository;
     }
@@ -38,10 +41,10 @@ public class PostService {
                 .orElseThrow(() -> new PostNotFoundException(id));
     }
 
-    public PostsResponseDTO getAllPosts() {
-        PostsResponseDTO postsResponseDTO = new PostsResponseDTO();
+    public List<PostResponseDTO> getAllPosts() {
+        List<PostResponseDTO> postsResponseDTO = new ArrayList<>();
         List<PostEntity> posts = Streamable.of(postRepository.findAll()).toList();
-        posts.forEach(postEntity -> postsResponseDTO.getPosts().add(mapPostEntityToDTO(postEntity)) );
+        posts.forEach(postEntity -> postsResponseDTO.add(mapPostEntityToDTO(postEntity)) );
         return postsResponseDTO;
     }
 
@@ -57,15 +60,16 @@ public class PostService {
                 postToMap.getId(),
                 postToMap.getTitle(),
                 postToMap.getContent(),
-                postToMap.getAuthor().getId(),
-                postToMap.getTopic().getId(),
+                userService.mapUserEntityToDTO(postToMap.getAuthor()),
+                postToMap.getTopic(),
+                postToMap.getComments(),
                 postToMap.getCreatedAt()
         );
     }
 
     public PostEntity toEntity(PostRequestDTO dto) {
 
-        UserEntity author = userRepository.findById(Math.toIntExact(dto.getUserId()))
+        UserEntity author = userRepository.findById(dto.getUserId())
                 .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
 
         TopicEntity topic = topicRepository.findById(dto.getTopicId())

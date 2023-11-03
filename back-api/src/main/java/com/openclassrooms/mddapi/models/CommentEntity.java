@@ -1,5 +1,7 @@
 package com.openclassrooms.mddapi.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,10 +24,12 @@ public class CommentEntity {
         private String content;
         @ManyToOne
         @JoinColumn(name = "user_id")
+        @JsonIgnoreProperties(value = {"subscriptions", "password"})
         private UserEntity user;
         @ManyToOne
         @JoinColumn(name = "post_id")
+        @JsonIgnore
         private PostEntity post;
-        @Column(name = "createdAt")
+        @Column(name = "created_at")
         private LocalDate createdAt;
 }

@@ -11,24 +11,23 @@ import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class TopicService {
 
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
     private TopicRepository topicRepository;
 
     public TopicService() {}
 
 
-    public TopicsResponseDTO getAllTopics() {
-        TopicsResponseDTO topicsResponseDTO = new TopicsResponseDTO();
+    public List<TopicResponseDTO> getAllTopics() {
         List<TopicEntity> topics = Streamable.of(topicRepository.findAll()).toList();
-        topics.forEach(topic -> topicsResponseDTO.getTopics().add(mapTopicEntityToDTO(topic)) );
-        return topicsResponseDTO;
+        List<TopicResponseDTO> topicsDto = new ArrayList<>();
+        topics.forEach( topic -> topicsDto.add(mapTopicEntityToDTO(topic)));
+        return topicsDto;
     }
 
     public TopicResponseDTO addNewTopic(TopicRequestDTO newTopic) {

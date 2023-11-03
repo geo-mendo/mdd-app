@@ -16,10 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Data
@@ -30,6 +27,7 @@ import java.util.Set;
 public class UserEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
     @Column(name = "username")
     private String username;
@@ -37,31 +35,22 @@ public class UserEntity implements UserDetails {
     private String email;
     @Column(name = "password")
     private String password;
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(
-            name="subscriptions",
-            joinColumns=@JoinColumn(name="user_id", referencedColumnName="id"),
-            inverseJoinColumns=@JoinColumn(name="topic_id", referencedColumnName="id")
+            name="users_topics",
+            joinColumns=@JoinColumn(name="user_id"),
+            inverseJoinColumns=@JoinColumn(name="topic_id")
     )
-    private Set<TopicEntity> subscriptions = new HashSet<>();
-    @Column(name = "createdAt")
+    private List<TopicEntity> subscriptions = new ArrayList<>();
+    @Column(name = "created_at")
     private LocalDate createdAt;
-    @Column(name = "updatedAt")
+    @Column(name = "updated_at")
     private LocalDate updatedAt;
 
-    @Override
-    public String getUsername() {
-        return email;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return new HashSet<>();
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
     }
 
     @Override
@@ -83,4 +72,15 @@ public class UserEntity implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
+
 }

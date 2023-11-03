@@ -35,7 +35,7 @@ public class AuthController {
                             schema = @Schema(implementation = UserResponseDTO.class)) }),
             @ApiResponse(responseCode = "403", description = "Accès non autorisé"),
             @ApiResponse(responseCode = "500", description = "Erreur interne du serveur") })
-    @GetMapping("/me")
+    @GetMapping("/current-user")
     public ResponseEntity<UserResponseDTO> getCurrentUser(HttpServletRequest request) throws ServletException, IOException {
         return ResponseEntity.ok(service.getCurrentUser(request));
     }
@@ -52,7 +52,7 @@ public class AuthController {
             @Parameter(description="Requête d'enregistrement contenant les informations de l'utilisateur à enregistrer", required=true)
             @RequestBody RegisterRequest request
     ) {
-        System.out.println(request);
+
         return ResponseEntity.ok(service.register(request));
     }
 
@@ -64,7 +64,7 @@ public class AuthController {
             @ApiResponse(responseCode = "400", description = "Mauvaise requête - les informations fournies sont invalides"),
             @ApiResponse(responseCode = "401", description = "Authentification échouée"),
             @ApiResponse(responseCode = "500", description = "Erreur interne du serveur") })
-    @PostMapping("/login")
+    @PostMapping("/signin")
     public ResponseEntity<AuthResponseDTO> authenticate(
             @Parameter(description="Requête d'authentification contenant les informations de l'utilisateur à authentifier", required=true)
             @RequestBody AuthRequestDTO request

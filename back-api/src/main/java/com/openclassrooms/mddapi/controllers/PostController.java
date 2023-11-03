@@ -2,7 +2,6 @@ package com.openclassrooms.mddapi.controllers;
 
 import com.openclassrooms.mddapi.dto.PostRequestDTO;
 import com.openclassrooms.mddapi.dto.PostResponseDTO;
-import com.openclassrooms.mddapi.dto.PostsResponseDTO;
 import com.openclassrooms.mddapi.dto.UserResponseDTO;
 import com.openclassrooms.mddapi.services.AuthService;
 import com.openclassrooms.mddapi.services.PostService;
@@ -20,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/posts")
@@ -35,11 +35,10 @@ public class PostController {
     @Operation(summary = "Récupérer tous les articles",security = @SecurityRequirement(name = "bearerAuth"))
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Retourne la liste de tout les articles",
-                    content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = PostsResponseDTO.class)) }),
+                    content = { @Content(mediaType = "application/json") }),
             @ApiResponse(responseCode = "500", description = "Erreur interne du serveur") })
     @GetMapping
-    public ResponseEntity<PostsResponseDTO> getAllPosts() {
+    public ResponseEntity<List<PostResponseDTO>> getAllPosts() {
         return ResponseEntity.ok(postService.getAllPosts());
     }
 
